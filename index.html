@@ -80,13 +80,18 @@
         }, 10000);
       }
 
-      document.addEventListener("DOMContentLoaded", function(event) { 
-        setInterval(function() {
+      function animate() {
+        setTimeout(function() {
           if (elements.length > 500) {
             removeElement();
           }
           addElement();
-        }, 100);
+          animate();
+        }, Math.pow(elements.length/500, 2) * 400 + 100);
+      }
+
+      document.addEventListener("DOMContentLoaded", function(event) {
+        animate();
       });
     })();
   </script>
