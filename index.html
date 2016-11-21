@@ -32,6 +32,10 @@
       opacity: 1;
       transition: opacity 10s steps(60);
     }
+    .fullstopText {
+      position: absolute;
+      right: 100%;
+    }
     .sitenameText {
       opacity: 1;
       transition: opacity 2s steps(60);
@@ -48,21 +52,24 @@
     (function() {
       'use strict';
       var elements = [];
-      var widthOverdraw = 0.31;
+      var widthOverdraw = 0.15;
       var heightOverdraw = 0.06;
 
       function addElement() {
         var el = document.createElement('div');
         el.classList.add('sitename');
-        el.innerHTML = '<span class="sitenameText">fullstop</span>.' +
+        el.innerHTML = '<span class="sitenameText fullstopText">fullstop</span>.' +
           '<span class="sitenameText">space</span>';
         el.style.fontSize = (Math.random() * 0.05 + 0.01) * 100 + 'vh';
         el.style.top = (Math.random() * (1 + heightOverdraw) - heightOverdraw) * 100 + 'vh';
-        el.style.left = (Math.random() * (1 + widthOverdraw) - widthOverdraw) * 100 + 'vw';
+        el.style.left = (Math.random() * (1 + 2*widthOverdraw) - widthOverdraw) * 100 + 'vw';
         document.body.appendChild(el);
         void el.offsetLeft; // force a reflow
         el.classList.add('sitenameFaded');
         elements.push(el);
+        setTimeout(function() {
+          el.innerHTML = '.';
+        }, 2000)
       }
 
       function removeElement() {
