@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>fullstop.space</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto:100,500');
+    body {
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeSpeed;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: default;
+    }
+    .sitename {
+      color: white;
+      font-family: Roboto, Helvetica, Arial, sans-serif;
+      position: absolute;
+      font-weight: 500;
+      opacity: 1;
+      transition: opacity 10s steps(60);
+    }
+    .sitenameText {
+      opacity: 1;
+      transition: opacity 2s steps(60);
+      font-weight: 100;
+    }
+    .sitenameFaded .sitenameText {
+      opacity: 0;
+    }
+    .sitenameRemoved {
+      opacity: 0;
+    }
+  </style>
+  <script>
+    (function() {
+      'use strict';
+      var elements = [];
+      var widthOverdraw = 0.31;
+      var heightOverdraw = 0.06;
+
+      function addElement() {
+        var el = document.createElement('div');
+        el.classList.add('sitename');
+        el.innerHTML = '<span class="sitenameText">fullstop</span>.' +
+          '<span class="sitenameText">space</span>';
+        el.style.fontSize = (Math.random() * 0.05 + 0.01) * 100 + 'vh';
+        el.style.top = (Math.random() * (1 + heightOverdraw) - heightOverdraw) * 100 + 'vh';
+        el.style.left = (Math.random() * (1 + widthOverdraw) - widthOverdraw) * 100 + 'vw';
+        document.body.appendChild(el);
+        void el.offsetLeft; // force a reflow
+        el.classList.add('sitenameFaded');
+        elements.push(el);
+      }
+
+      function removeElement() {
+        var el = elements.pop();
+        el.classList.add('sitenameRemoved');
+        setTimeout(function() {
+          document.body.removeChild(el);
+        }, 10000);
+      }
+
+      document.addEventListener("DOMContentLoaded", function(event) { 
+        setInterval(function() {
+          if (elements.length > 500) {
+            removeElement();
+          }
+          addElement();
+        }, 100);
+      });
+    })();
+  </script>
+</head>
+<body>
+</body>
+</html>
